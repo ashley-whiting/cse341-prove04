@@ -37,9 +37,29 @@ app.use(errorController.get404);
 
 const PORT = process.env.PORT || 3000;
 
-mongoose.connect('mongodb+srv://ashleyw:Citihealth89@cluster0.nrjfq.mongodb.net/shop?retryWrites=true&w=majority')
-.then(result => {
-  User.findOne()
+const cors = require('cors') // Place this with other requires (like 'path' and 'express')
+
+const corsOptions = {
+    origin: "https://prove04-whiting.herokuapp.com/",
+    optionsSuccessStatus: 200
+};
+app.use(cors(corsOptions));
+
+const options = {
+    useUnifiedTopology: true,
+    useNewUrlParser: true,
+    useCreateIndex: true,
+    useFindAndModify: false,
+    family: 4
+};
+
+const MONGODB_URL = process.env.MONGODB_URL || "mongodb+srv://ashleyw:Citihealth89@cse341cluster-3dwlw.mongodb.net/shop?retryWrites=true&w=majority";
+     
+mongoose.connect(
+  MONGODB_URL, options
+  )
+  .then(result => {
+      User.findOne()
   .then(user => {
     if (!user){
     const user = new User(
@@ -53,12 +73,18 @@ mongoose.connect('mongodb+srv://ashleyw:Citihealth89@cluster0.nrjfq.mongodb.net/
     user.save();
   }
 });  
-  app.listen(3000);
+app.listen(PORT, () => console.log('Listening on ${PORT}'));
 })
 
 .catch(err => {
   console.log(err);
 });
+
+  
+
+// mongoose.connect('mongodb+srv://ashleyw:Citihealth89@cluster0.nrjfq.mongodb.net/shop?retryWrites=true&w=majority')
+// .then(result => {
+
 // mongoConnect(() => {
 //   app.listen(PORT, () => console.log('Listening on ${PORT}'));
 // });
