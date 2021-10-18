@@ -48,18 +48,14 @@ app.use(cors(corsOptions));
 const options = {
     useUnifiedTopology: true,
     useNewUrlParser: true,
-    useCreateIndex: true,
-    useFindAndModify: false,
+    //useCreateIndex: true,
+    //useFindAndModify: false,
     family: 4
 };
 
-const MONGODB_URL = process.env.MONGODB_URL || "mongodb+srv://ashleyw:Citihealth89@cse341cluster-3dwlw.mongodb.net/shop?retryWrites=true&w=majority";
-     
-mongoose.connect(
-  MONGODB_URL, options
-  )
-  .then(result => {
-      User.findOne()
+mongoose.connect('mongodb+srv://ashleyw:Citihealth89@cluster0.nrjfq.mongodb.net/shop?retryWrites=true&w=majority')
+.then(result => {
+  User.findOne()
   .then(user => {
     if (!user){
     const user = new User(
@@ -74,11 +70,39 @@ mongoose.connect(
   }
 });  
 app.listen(PORT, () => console.log('Listening on ${PORT}'));
+  //app.listen(5000);
 })
 
 .catch(err => {
   console.log(err);
 });
+
+// const MONGODB_URL = process.env.MONGODB_URL || "mongodb+srv://ashleyw:Citihealth89@cse341cluster-3dwlw.mongodb.net/shop?retryWrites=true&w=majority";
+     
+// mongoose.connect(
+//   MONGODB_URL, options
+//   )
+//   .then(result => {
+//       User.findOne()
+//   .then(user => {
+//     if (!user){
+//     const user = new User(
+//       {
+//         name: 'Ashley',
+//         email: 'ashley@books.org',
+//         cart: {
+//           items: []
+//         }
+//       });
+//     user.save();
+//   }
+// });  
+// app.listen(PORT, () => console.log('Listening on ${PORT}'));
+// })
+
+// .catch(err => {
+//   console.log(err);
+// });
 
   
 
